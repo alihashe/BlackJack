@@ -1,37 +1,58 @@
 import Card
+from Card import *
 
 class Deck:
 
     def __init__(self):
         self.size = 52
-        self.deckSize = 0
-        self.deckList = {}
+        self.deckList = []
 
     def generate_num_cards(self, suit, col, image):
         numOfNumCards = 10
         i = 2
         while i <= numOfNumCards:
-            self.deckList[self.deckSize] = Card(i, suit, col, image)
-            self.deckSize += 1
+            self.deckList.append(Card(i, suit, col, str(i) + image))
             i += 1
 
-    def generate_face_cards(self, suit, col, image):
-        numOfFaceCards = 3
-        i = 1
-        while i <= numOfFaceCards:
-            self.deckList[self.deckSize] = Card(10, suit, col, image)
-            self.deckSize += 1
-            i += 1
+    def generate_face_cards(self, suit, col):
+        self.deckList.append(Card(10, suit, col, "jack_of_" + suit + ".png"))
+        self.deckList.append(Card(10, suit, col, "king_of_" + suit + ".png"))
+        self.deckList.append(Card(10, suit, col, "queen_of_" + suit + ".png"))
 
-    def generate_aces(self, suit, col, image):
-        self.deckList[self.deckSize] = Card(1, suit, col, image)
-        self.deckSize += 1
+    def generate_ace(self, suit, col, image):
+        self.deckList.append(Card(1, suit, col, image))
 
-    def generate_reds(self, image):
-        pass
+    def generate_clubs(self):
+        self.generate_ace("clubs", "black", "ace_of_clubs.png")
+        self.generate_num_cards("clubs", "black", "_of_clubs.png")
+        self.generate_face_cards("clubs", "black")
 
-    def generate_blacks(self):
-        pass
+    def generate_diamonds(self):
+        self.generate_ace("diamonds", "red", "ace_of_diamonds.png")
+        self.generate_num_cards("diamonds", "red", "_of_diamonds.png")
+        self.generate_face_cards("diamonds", "red")
+
+    def generate_hearts(self):
+        self.generate_ace("hearts", "red", "ace_of_hearts.png")
+        self.generate_num_cards("hearts", "red", "_of_hearts.png")
+        self.generate_face_cards("hearts", "red")
+
+    def generate_spades(self):
+        self.generate_ace("spades", "black", "ace_of_spades.png")
+        self.generate_num_cards("spades", "black", "_of_spades.png")
+        self.generate_face_cards("spades", "black")
 
     def generate_deck(self):
-        pass
+        self.generate_clubs()
+        self.generate_diamonds()
+        self.generate_hearts()
+        self.generate_spades()
+
+
+# newDeck = Deck()
+# newDeck.generate_deck()
+# for c in newDeck.deckList:
+#     print(c.get_value())
+#     print(c.get_suit())
+#     print(c.get_color())
+#     print(c.get_image())
