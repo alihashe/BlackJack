@@ -4,8 +4,8 @@ import Deck
 from Deck import *
 
 def main():
-    #testDict = {}
-    pass
+    while True:
+        pass
     
 
 if __name__ == "__main__":
