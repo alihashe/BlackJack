@@ -1,11 +1,9 @@
-from tkinter import *
-import Card
-import Deck
-from Deck import *
+import pygame as pg
+# from GUI import *
 
 def main():
-    while True:
-        pass
+    
+    pass
     
 
 if __name__ == "__main__":

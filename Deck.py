@@ -1,3 +1,4 @@
+import random
 import Card
 from Card import *
 
@@ -47,10 +48,29 @@ class Deck:
         self.generate_diamonds()
         self.generate_hearts()
         self.generate_spades()
+        self.shuffleDeck()
 
+    def shuffleDeck(self):
+        random.shuffle(self.deckList)
+
+    def pull_card(self):
+        if not self.deckList:
+            self.generate_deck()
+            return self.deckList.pop()
+        else:
+            return self.deckList.pop()
+
+
+# For Testing
 
 # newDeck = Deck()
 # newDeck.generate_deck()
+# for c in newDeck.deckList:
+#     print(c.get_value())
+#     print(c.get_suit())
+#     print(c.get_color())
+#     print(c.get_image())
+# newDeck.shuffleDeck()
 # for c in newDeck.deckList:
 #     print(c.get_value())
 #     print(c.get_suit())
