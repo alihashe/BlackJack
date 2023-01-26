@@ -1,27 +1,27 @@
-import random
+from random import shuffle
 import Card
-from Card import *
 
 class Deck:
 
     def __init__(self):
         self.size = 52
         self.deckList = []
+        self.generate_deck()
 
     def generate_num_cards(self, suit, col, image):
         numOfNumCards = 10
         i = 2
         while i <= numOfNumCards:
-            self.deckList.append(Card(i, suit, col, str(i) + image))
+            self.deckList.append(Card.Card(i, suit, col, str(i) + image))
             i += 1
 
     def generate_face_cards(self, suit, col):
-        self.deckList.append(Card(10, suit, col, "jack_of_" + suit + ".png"))
-        self.deckList.append(Card(10, suit, col, "king_of_" + suit + ".png"))
-        self.deckList.append(Card(10, suit, col, "queen_of_" + suit + ".png"))
+        self.deckList.append(Card.Card(10, suit, col, "jack_of_" + suit + ".png"))
+        self.deckList.append(Card.Card(10, suit, col, "king_of_" + suit + ".png"))
+        self.deckList.append(Card.Card(10, suit, col, "queen_of_" + suit + ".png"))
 
     def generate_ace(self, suit, col, image):
-        self.deckList.append(Card(1, suit, col, image))
+        self.deckList.append(Card.Card(1, suit, col, image))
 
     def generate_clubs(self):
         self.generate_ace("clubs", "black", "ace_of_clubs.png")
@@ -51,7 +51,7 @@ class Deck:
         self.shuffleDeck()
 
     def shuffleDeck(self):
-        random.shuffle(self.deckList)
+        shuffle(self.deckList)
 
     def pull_card(self):
         if not self.deckList:
@@ -64,12 +64,14 @@ class Deck:
 # For Testing
 
 # newDeck = Deck()
-# newDeck.generate_deck()
+# i = 0
 # for c in newDeck.deckList:
+#     i+=1
 #     print(c.get_value())
 #     print(c.get_suit())
 #     print(c.get_color())
 #     print(c.get_image())
+# print(i)
 # newDeck.shuffleDeck()
 # for c in newDeck.deckList:
 #     print(c.get_value())
