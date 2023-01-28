@@ -1,12 +1,19 @@
 from random import shuffle
 import Card
+import pygame as pg
 
-class Deck:
+class Deck(pg.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, screen):
+        super().__init__()
         self.size = 52
         self.deckList = []
         self.generate_deck()
+        self.image = pg.image.load('Images/card_back_black.png').convert_alpha()
+        self.image = pg.transform.scale(self.image,(176,250))
+        self.rect = self.image.get_rect(center = (screen.get_width() // 2,250))
+
+    # region Generate Card Value Types
 
     def generate_num_cards(self, suit, col, image):
         numOfNumCards = 10
@@ -22,6 +29,10 @@ class Deck:
 
     def generate_ace(self, suit, col, image):
         self.deckList.append(Card.Card(1, suit, col, image))
+
+    # endregion
+
+    # region Generate Suit Types
 
     def generate_clubs(self):
         self.generate_ace("clubs", "black", "ace_of_clubs.png")
@@ -43,12 +54,16 @@ class Deck:
         self.generate_num_cards("spades", "black", "_of_spades.png")
         self.generate_face_cards("spades", "black")
 
+    # endregion
+
     def generate_deck(self):
         self.generate_clubs()
         self.generate_diamonds()
         self.generate_hearts()
         self.generate_spades()
         self.shuffleDeck()
+        if (len(self.deckList) != self.size):
+            raise Exception("Deck has incorrect number of cards. Check Deck class.")
 
     def shuffleDeck(self):
         shuffle(self.deckList)
@@ -61,7 +76,7 @@ class Deck:
             return self.deckList.pop()
 
 
-# For Testing
+# region For Testing
 
 # newDeck = Deck()
 # i = 0
@@ -78,3 +93,5 @@ class Deck:
 #     print(c.get_suit())
 #     print(c.get_color())
 #     print(c.get_image())
+
+# endregion
