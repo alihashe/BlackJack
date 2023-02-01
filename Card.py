@@ -1,3 +1,4 @@
+import pygame as pg
 class Card:
 
     def __init__(self, value, suit, color, image):
@@ -5,7 +6,8 @@ class Card:
         self.value = value
         self.suit = suit
         self.color = color
-        self.image = image
+        self.image = pg.image.load(image)
+        self.image = pg.transform.smoothscale(self.image,(176,250))
 
     def get_value(self):
         return self.value
@@ -30,3 +32,8 @@ class Card:
 
     def set_image(self, aPic):
         self.value = aPic
+
+    def draw(self,screen,x_pos,y_pos):
+        self.rect = self.image.get_rect(center=(x_pos,y_pos))
+        if self.image is not None:
+            screen.blit(self.image, self.rect)
