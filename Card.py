@@ -7,7 +7,7 @@ class Card:
         self.suit = suit
         self.color = color
         self.image = pg.image.load(image)
-        self.image = pg.transform.smoothscale(self.image,(176,250))
+        self.image = pg.transform.smoothscale(self.image,(88,125))
 
     def get_value(self):
         return self.value

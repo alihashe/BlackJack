@@ -27,7 +27,7 @@ class Deck(Button.Button):
         self.deckList.append(Card.Card(10, suit, col, "Images/Front/queen_of_" + suit + ".png"))
 
     def generate_ace(self, suit, col, image):
-        self.deckList.append(Card.Card(1, suit, col, image))
+        self.deckList.append(Card.Card(11, suit, col, image))
 
     # endregion
 
