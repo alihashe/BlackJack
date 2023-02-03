@@ -61,6 +61,7 @@ class Deck(Button.Button):
         self.generate_hearts()
         self.generate_spades()
         self.shuffleDeck()
+        self.shuffleDeck()
         if (len(self.deckList) != self.size):
             raise Exception("Deck has incorrect number of cards. Check Deck class.")
 

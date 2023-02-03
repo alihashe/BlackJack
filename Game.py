@@ -8,8 +8,15 @@ class Game:
 
     def __init__(self, totalCash):
         self.totalCash = totalCash
+        self.chipSound = pg.mixer.Sound("Sounds/poker-chip.wav")
+        self.cardDrawSound = pg.mixer.Sound("Sounds/card-draw.wav")
+        self.loseSound = pg.mixer.Sound("Sounds/lose-sound.wav")
+        self.winSound = pg.mixer.Sound("Sounds/win-sound.wav")
+        self.selectSound = pg.mixer.Sound("Sounds/select-button.wav")
+        self.startBetting()
 
     def startBetting(self):
+        """Initializes the turn variables and collects the bet amount from the player."""
         self.hand = 0 # The current total value of a players hand
         self.dealerHand = 0 # The current total value of a dealers hand
         self.bet = 0 # The current amount of money riding on a turn.
@@ -29,20 +36,20 @@ class Game:
         while True:
             self.mousePos = pg.mouse.get_pos()
             # region Text and Button Init
-            self.betText = self.uiFont.render('Please Choose The Amount You Would Like To Bet!', True, 'White','forestgreen')
-            self.betAmountText = self.uiFont.render('$' + str(self.bet), True, 'White', 'forestgreen')
-            self.totalCashAmountText = self.uiFont.render('$' + str(self.totalCash), True, 'White', 'forestgreen')
-            self.betButton = Button.Button(image=pg.image.load('Images/default_button_1.png'),pos=((self.screen.get_width() * 0.35),(self.screen.get_height() * 0.25)),text_input='Make Bet',font=self.uiFont,base_color='white',hovering_color='yellow')
-            self.resetButton = Button.Button(image=pg.image.load('Images/default_button_1.png'),pos=((self.screen.get_width() * 0.65),(self.screen.get_height() * 0.25)),text_input='Reset',font=self.uiFont,base_color='white',hovering_color='yellow')
+            self.betText = self.uiFont.render('Please Choose The Amount You Would Like To Bet!', True, 'White','darkred')
+            self.betAmountText = self.uiFont.render('$' + str(self.bet), True, 'White', 'darkred')
+            self.totalCashAmountText = self.uiFont.render('$' + str(self.totalCash), True, 'White', 'darkred')
+            self.betButton = Button.Button(image=pg.image.load('Images/default_button_1.png'),pos=((self.screen.get_width() * 0.35),(self.screen.get_height() * 0.25)),text_input='Make Bet',font=self.uiFont,base_color='white',hovering_color='yellow2')
+            self.resetButton = Button.Button(image=pg.image.load('Images/default_button_1.png'),pos=((self.screen.get_width() * 0.65),(self.screen.get_height() * 0.25)),text_input='Reset',font=self.uiFont,base_color='white',hovering_color='yellow2')
 
-            self.betTextRect = self.betText.get_rect(center = (self.screen.get_width() // 2, 50))
+            self.betTextRect = self.betText.get_rect(center = (self.screen.get_width() * 0.5, 50))
             self.betAmountTextRect = self.betAmountText.get_rect(center = (self.screen.get_width() // 2, 100))
             self.totalCashAmountTextRect = self.totalCashAmountText.get_rect(center = (self.screen.get_width() - 75, self.screen.get_height() - 50))
-            self.whiteChipButton = Button.Button(image=pg.image.load('Images/Chips/white_chip.png'),pos=((self.screen.get_width() * 0.2),(self.screen.get_height() * 0.75)),text_input="1$",font=self.chipFont,base_color='white',hovering_color='yellow')
-            self.redChipButton = Button.Button(image=pg.image.load('Images/Chips/red_chip.png'),pos=((self.screen.get_width() * 0.35),(self.screen.get_height() * 0.5)),text_input="5$",font=self.chipFont,base_color='white',hovering_color='yellow')
-            self.blueChipButton = Button.Button(image=pg.image.load('Images/Chips/blue_chip.png'),pos=((self.screen.get_width() * 0.5),(self.screen.get_height() * 0.75)),text_input="10$",font=self.chipFont,base_color='white',hovering_color='yellow')
-            self.greenChipButton = Button.Button(image=pg.image.load('Images/Chips/green_chip.png'),pos=((self.screen.get_width() * 0.65),(self.screen.get_height() * 0.5)),text_input="25$",font=self.chipFont,base_color='white',hovering_color='yellow')
-            self.blackChipButton = Button.Button(image=pg.image.load('Images/Chips/black_chip.png'),pos=((self.screen.get_width() * 0.8),(self.screen.get_height() * 0.75)),text_input="100$",font=self.chipFont,base_color='white',hovering_color='yellow')
+            self.whiteChipButton = Button.Button(image=pg.image.load('Images/Chips/white_chip.png'),pos=((self.screen.get_width() * 0.2),(self.screen.get_height() * 0.75)),text_input="1$",font=self.chipFont,base_color='white',hovering_color='yellow2')
+            self.redChipButton = Button.Button(image=pg.image.load('Images/Chips/red_chip.png'),pos=((self.screen.get_width() * 0.35),(self.screen.get_height() * 0.5)),text_input="5$",font=self.chipFont,base_color='white',hovering_color='yellow2')
+            self.blueChipButton = Button.Button(image=pg.image.load('Images/Chips/blue_chip.png'),pos=((self.screen.get_width() * 0.5),(self.screen.get_height() * 0.75)),text_input="10$",font=self.chipFont,base_color='white',hovering_color='yellow2')
+            self.greenChipButton = Button.Button(image=pg.image.load('Images/Chips/green_chip.png'),pos=((self.screen.get_width() * 0.65),(self.screen.get_height() * 0.5)),text_input="25$",font=self.chipFont,base_color='white',hovering_color='yellow2')
+            self.blackChipButton = Button.Button(image=pg.image.load('Images/Chips/black_chip.png'),pos=((self.screen.get_width() * 0.8),(self.screen.get_height() * 0.75)),text_input="100$",font=self.chipFont,base_color='white',hovering_color='yellow2')
         
             self.screen.blits([(self.betText,self.betTextRect),(self.betAmountText,self.betAmountTextRect),(self.totalCashAmountText,self.totalCashAmountTextRect)])
             # endregion
@@ -52,7 +59,6 @@ class Game:
                 newNumber = ''.join(x for x in button.text_input if x.isdigit())
                 if self.totalCash >= int(newNumber):
                     button.update(self.screen)
-
             if self.bet > 0:
                 self.betButton.changeColor(self.mousePos)
                 self.betButton.resize(150, 90)
@@ -60,69 +66,78 @@ class Game:
                 self.resetButton.changeColor(self.mousePos)
                 self.resetButton.resize(150, 90)
                 self.resetButton.update(self.screen)
-
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
                     exit()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if self.whiteChipButton.checkForInput(self.mousePos) and self.totalCash - 1 >= 0:
+                        pg.mixer.Sound.play(self.chipSound,loops=0)
                         self.totalCash -= 1
                         self.bet += 1
                         self.updateCosts()
                     elif self.redChipButton.checkForInput(self.mousePos) and self.totalCash - 5 >= 0:
+                        pg.mixer.Sound.play(self.chipSound,loops=0)
                         self.totalCash -= 5
                         self.bet += 5
                         self.updateCosts()
                     elif self.blueChipButton.checkForInput(self.mousePos) and self.totalCash - 10 >= 0:
+                        pg.mixer.Sound.play(self.chipSound,loops=0)
                         self.totalCash -= 10
                         self.bet += 10
                         self.updateCosts()
                     elif self.greenChipButton.checkForInput(self.mousePos) and self.totalCash - 25 >= 0:
+                        pg.mixer.Sound.play(self.chipSound,loops=0)
                         self.totalCash -= 25
                         self.bet += 25
                         self.updateCosts()
                     elif self.blackChipButton.checkForInput(self.mousePos) and self.totalCash - 100 >= 0:
+                        pg.mixer.Sound.play(self.chipSound,loops=0)
                         self.totalCash -= 100
                         self.bet += 100
                         self.updateCosts()
-
                     if self.betButton.checkForInput(self.mousePos) and self.bet > 0:
+                        pg.mixer.Sound.play(self.cardDrawSound,loops=0)
                         self.take_turn()
                     if self.resetButton.checkForInput(self.mousePos) and self.bet > 0:
+                        pg.mixer.Sound.play(self.selectSound,loops=0)
                         self.totalCash += self.bet
                         self.bet -= self.bet
                         self.updateCosts()
-
             pg.display.update()
             pg.display.flip()
             self.frameSpeed.tick(60)
 
     def updateCosts(self):
+        """Updates the UI for the bet text and the current amount of total money."""
         self.screen.fill('forestgreen')
         self.betAmountText = self.uiFont.render('$' + str(self.bet), True, 'White', 'forestgreen')
         self.totalCashAmountText = self.uiFont.render('$' + str(self.totalCash), True, 'White', 'forestgreen')
 
     def take_turn(self):
+        """Begins the player turn."""
         self.screen.fill('forestgreen') # Set Background Image
         pg.display.set_caption('BlackJack') # Name the window
         pg.display.set_icon(pg.image.load('Images/Chips/red_chip.png').convert()) # Set Icon
-        self.aDeck = Deck.Deck(image=pg.image.load('Images/card_back_black.png').convert_alpha(),pos=(self.screen.get_width() * 0.5,self.screen.get_height() * 0.25),text_input='HIT',font=self.chipFont,base_color='white',hovering_color='yellow')
+        self.aDeck = Deck.Deck(image=pg.image.load('Images/card_back_black.png').convert_alpha(),pos=(self.screen.get_width() * 0.5,self.screen.get_height() * 0.25),text_input='HIT',font=self.chipFont,base_color='white',hovering_color='yellow2')
+        pg.mixer.Sound.play(self.cardDrawSound,loops=0)
         self.cardPos_X = self.screen.get_width() * 0.45
         self.aceCheck = 0
         self.dealer_first_draw()
+        self.player_draw()
+        self.player_draw()
         while True:
             self.mousePos = pg.mouse.get_pos()
-            # self.aDeck = Deck.Deck(image=pg.image.load('Images/card_back_black.png').convert_alpha(),pos=(self.screen.get_width() * 0.5,self.screen.get_height() * 0.25),text_input='HIT',font=self.chipFont,base_color='white',hovering_color='yellow')
             # Put shuffle animation here later
             self.aDeck.changeColor(self.mousePos)
             self.aDeck.resize(176,250)
             self.aDeck.update(self.screen)
-            self.stayButton = Button.Button(image=pg.image.load('Images/default_button_1.png').convert_alpha(),pos=(self.screen.get_width() * 0.85,self.screen.get_height() * 0.2),text_input='HOLD',font=self.uiFont,base_color='white',hovering_color='yellow')
+            self.stayButton = Button.Button(image=pg.image.load('Images/default_button_1.png').convert_alpha(),pos=(self.screen.get_width() * 0.85,self.screen.get_height() * 0.2),text_input='HOLD',font=self.uiFont,base_color='white',hovering_color='yellow2')
             if self.currCardVal > 0:
                 self.stayButton.changeColor(self.mousePos)
                 self.stayButton.resize(150, 90)
                 self.stayButton.update(self.screen)
+            # region Draw GUI to Screen
             self.betAmountText = self.uiFont.render('BET: $' + str(self.bet), True, 'White', 'darkred')
             self.betAmountTextRect = self.betAmountText.get_rect(center = (self.screen.get_width() * 0.85, self.screen.get_height() * 0.85))
             self.screen.blit(self.betAmountText,self.betAmountTextRect)
@@ -133,18 +148,15 @@ class Game:
             self.dealerCardValTextRect = self.dealerCardValText.get_rect(center = (self.screen.get_width() * 0.15, self.screen.get_height() * 0.75))
             self.screen.blit(self.dealerCardValText,self.dealerCardValTextRect)
             self.draw_dealers_first_hand()
+            # endregion
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
                     exit()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if self.aDeck.checkForInput(self.mousePos) and not self.hand == 21:
-                        self.add_a_card(self.usedPlayerCards)
-                        self.currCardVal = self.newCard.get_value()
-                        # if self.newCard.get_value() == 1:
-                        #     self.confirm_ace()
-                        self.draw_player_hand()
-                        self.hand += self.currCardVal
+                        pg.mixer.Sound.play(self.cardDrawSound,loops=0)
+                        self.player_draw()
                     if self.stayButton.checkForInput(self.mousePos):
                         self.start_dealers_turn()
             if self.hand > 21:
@@ -153,17 +165,22 @@ class Game:
                     self.aceCheck += 1
                 else:
                     self.dealer_second_draw()
+                    pg.mixer.Sound.play(self.loseSound,loops=0)
                     self.end_round("Dealer Wins","Bet Lost: $","darkred")
             elif self.hand == 21:
-                self.black_jack()
+                self.dealer_second_draw()
+                self.check_black_jack()
+                self.start_dealers_turn()
             pg.display.update()
             pg.display.flip()
             self.frameSpeed.tick(60)
 
     def start_dealers_turn(self):
+        """Begins the dealers turn."""
         self.screen.fill('forestgreen') # Set Background Image
         self.aceCheck = 0
         while True:
+            # region Draw GUI to Screen
             self.aDeck.resize(176,250)
             self.aDeck.update(self.screen)
             self.betAmountText = self.uiFont.render('BET: $' + str(self.bet), True, 'White', 'darkred')
@@ -176,11 +193,13 @@ class Game:
             self.dealerCardValTextRect = self.dealerCardValText.get_rect(center = (self.screen.get_width() * 0.15, self.screen.get_height() * 0.75))
             self.screen.blit(self.dealerCardValText,self.dealerCardValTextRect)
             self.draw_player_hand()
+            # endregion
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
                     exit()
-            # self.dealer_second_draw()
+            if self.dealerHand == 21:
+                self.check_black_jack()
             if self.dealerHand < self.hand:
                 if self.dealerHand < 21:
                     self.dealer_second_draw()
@@ -190,13 +209,14 @@ class Game:
                         self.aceCheck += 1
                     else:
                         self.totalCash += (self.bet * 2)
+                        pg.mixer.Sound.play(self.winSound,loops=0)
                         self.end_round("Player Wins","Bet Won: $","yellow")
-                if self.dealerHand == 21 and self.hand == 21:
+                if self.dealerHand == self.hand:
                     self.totalCash += self.bet
                     self.end_round("Tie","Bet Returned: $","white")
             else:
+                pg.mixer.Sound.play(self.loseSound,loops=0)
                 self.end_round("Dealer Wins","Bet Lost: $","darkred")
-
             pg.display.update()
             pg.display.flip()
             self.frameSpeed.tick(60)
@@ -231,6 +251,12 @@ class Game:
         for crd in self.usedDealerCards:
             crd.draw(self.screen,self.cardPos_X + (self.usedDealerCards.index(crd) * 25),self.screen.get_height() * 0.55)
 
+    def player_draw(self):
+        self.add_a_card(self.usedPlayerCards)
+        self.currCardVal = self.newCard.get_value()
+        self.draw_player_hand()
+        self.hand += self.currCardVal
+
     def draw_player_hand(self):
         for crd in self.usedPlayerCards:
             crd.draw(self.screen,self.cardPos_X + (self.usedPlayerCards.index(crd) * 25),self.screen.get_height() * 0.75)
@@ -238,11 +264,12 @@ class Game:
     # endregion
 
     def end_round(self, resultTitle, resultBet, textColor):
+        """Used to create a lose, win, or tie screen."""
         while True:
-            pg.display.set_caption(resultTitle) # Name the window
             pg.display.set_icon(pg.image.load('Images/Chips/white_chip.png').convert()) # Set Icon
             self.mousePos = pg.mouse.get_pos()
             self.screen.fill('forestgreen') # Set Background Image
+            # region Draw GUI to Screen
             self.lossText = self.chipFont.render(resultTitle, True, textColor,'forestgreen')
             self.lossTextRect = self.lossText.get_rect(center = (self.screen.get_width() * 0.5, self.screen.get_height() * 0.1))
             self.screen.blit(self.lossText,self.lossTextRect)
@@ -263,24 +290,38 @@ class Game:
                 button.changeColor(self.mousePos)
                 button.resize(160,160)
                 button.update(self.screen)
+            # endregion
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
                     exit()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if self.newBetButton.checkForInput(self.mousePos):
+                        pg.mixer.Sound.play(self.selectSound,loops=0)
                         self.startBetting()
                     if self.exitButton.checkForInput(self.mousePos):
+                        pg.mixer.Sound.play(self.selectSound,loops=0)
                         pg.quit()
                         exit()
             pg.display.update()
             pg.display.flip()
             self.frameSpeed.tick(60)
 
-    def black_jack(self):
-        pass
+    def check_black_jack(self):
+        if self.usedPlayerCards.__len__() == 2 and self.hand == 21:
+            if self.dealerHand != 21:
+                self.totalCash += (self.bet * 2)
+                pg.mixer.Sound.play(self.winSound,loops=0)
+                self.end_round("You have BlackJack!", "Bet Won: $", "yellow")
+            else:
+                self.totalCash += self.bet
+                self.end_round("Double BlackJack", "Bet Returned: $", "white")
+        if self.usedDealerCards.__len__() == 2 and self.dealerHand == 21:
+            pg.mixer.Sound.play(self.loseSound,loops=0)
+            self.end_round("Dealer has BlackJack","Bet Lost: $","darkred")
 
     def check_ace(self, usedCards):
+        """Returns the number of aces in a hand."""
         numberOfAces = 0
         for crd in usedCards:
             if crd.get_value() == 11:
@@ -288,5 +329,4 @@ class Game:
         return numberOfAces
 
 
-newGame = Game(5000)
-newBet = newGame.startBetting()
+# newGame = Game(5000)

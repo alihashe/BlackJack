@@ -1,11 +1,8 @@
-import pygame as pg
-import Game
+import MainMenu
 
 def main():
-    # newGame = Game.Game(5000)
-    # newGame.startBetting()
-    # newGame.take_turn()
-    pass
+    myMoney = 5000
+    MainMenu.MainMenu(myMoney)
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,5 @@
 import pygame as pg
 class Button():
-    #   --->   This button script was borrowed from BaralTech   <---   #
 	def __init__(self, image, pos, text_input, font, base_color, hovering_color):
 		self.image = image
 		self.x_pos = pos[0]
